@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>formMain.vr.annotated</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>formMain.vr.annotated</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <h2>Page at-a-time list with DSSList.</h2>
+<hr />
+<p>This program is an example of doing a page-at-a-time 
+list with Mobile RPG's DDSList control. Most this 
+program is not data dependent. By swapping out the 
+program called in GetList, you could use copies 
+of this program to populate many DDSLists.</p>
+<hr />
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="nx">Using</span> <span class="nx">System</span>
+<span class="nx">Using</span> <span class="nx">System</span><span class="p">.</span><span class="nx">Collections</span>
+<span class="nx">Using</span> <span class="nx">System</span><span class="p">.</span><span class="nx">ComponentModel</span>
+<span class="nx">Using</span> <span class="nx">System</span><span class="p">.</span><span class="nx">Data</span>
+<span class="nx">Using</span> <span class="nx">System</span><span class="p">.</span><span class="nx">Drawing</span>
+<span class="nx">Using</span> <span class="nx">System</span><span class="p">.</span><span class="nx">Text</span>
+<span class="nx">Using</span> <span class="nx">System</span><span class="p">.</span><span class="nx">Windows</span><span class="p">.</span><span class="nx">Forms</span>
+
+<span class="nx">BegClass</span> <span class="nx">formMain</span> <span class="nx">Extends</span><span class="p">(</span><span class="nx">System</span><span class="p">.</span><span class="nx">Windows</span><span class="p">.</span><span class="nx">Forms</span><span class="p">.</span><span class="nx">Form</span><span class="p">)</span> <span class="nx">Access</span><span class="p">(</span><span class="o">*</span><span class="nx">Public</span><span class="p">)</span> <span class="nx">Partial</span><span class="p">(</span><span class="o">*</span><span class="nx">Yes</span><span class="p">)</span>
+
+    <span class="o">/</span><span class="nx">region</span> <span class="nx">Default</span> <span class="nx">Constructor</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      <p>AVR for .NET's code-behinds are always classes and classes have 
+constructors. You don't usually put code here. Put set-up code in the 
+form's Load event. AVR Classic code-behinds don't have constructors. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nx">BegConstructor</span> <span class="nx">Access</span><span class="p">(</span><span class="o">*</span><span class="nx">Public</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      <p>Required for Windows Form Designer support</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="nx">InitializeComponent</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <p>TODO: Add any constructor code after InitializeComponent call</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nx">EndConstructor</span>
+
+    <span class="o">/</span><span class="nx">endregion</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      <p>A global variable to govern canceling program.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nx">DclFld</span> <span class="nx">Cancel</span> <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nb">Boolean</span><span class="p">)</span>
+
+    <span class="nx">DclDB</span> <span class="nx">pgmDB</span> <span class="nx">DBName</span><span class="p">(</span><span class="s2">&quot;*Public/DG Net Local&quot;</span><span class="p">)</span> 
+
+    <span class="nx">DclDiskFile</span>  <span class="nx">CustomerRO</span> <span class="o">+</span>
+          <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nx">Input</span><span class="p">)</span> <span class="o">+</span>
+          <span class="nx">Org</span><span class="p">(</span><span class="o">*</span><span class="nx">Indexed</span><span class="p">)</span> <span class="o">+</span>
+          <span class="nx">Prefix</span><span class="p">(</span><span class="nx">Customer_</span><span class="p">)</span> <span class="o">+</span>
+          <span class="nx">File</span><span class="p">(</span><span class="s2">&quot;Examples/CMastNewL1&quot;</span><span class="p">)</span> <span class="o">+</span>
+          <span class="nx">DB</span><span class="p">(</span><span class="nx">pgmDB</span><span class="p">)</span> <span class="o">+</span>
+          <span class="nx">ImpOpen</span><span class="p">(</span><span class="o">*</span><span class="nx">No</span><span class="p">)</span> <span class="o">+</span> 
+          <span class="nx">RnmFmt</span><span class="p">(</span><span class="nx">CUSTRO</span><span class="p">)</span>
+
+    <span class="nx">DclDs</span> <span class="nx">CustomerEDDS</span> <span class="nx">ExtDesc</span><span class="p">(</span><span class="o">*</span><span class="nx">Yes</span><span class="p">)</span> <span class="o">+</span>
+                      <span class="nx">DBDesc</span><span class="p">(</span><span class="s2">&quot;*PUBLIC/DG NET Local&quot;</span><span class="p">)</span> <span class="o">+</span>
+                      <span class="nx">FileDesc</span><span class="p">(</span><span class="s2">&quot;Examples/CMastNewL1&quot;</span><span class="p">)</span> <span class="o">+</span>                      
+                      <span class="nx">Prefix</span><span class="p">(</span><span class="nx">Customer_</span><span class="p">)</span> <span class="nx">Dim</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>AVR for .NET doesn't support executable code in the mainline;
+you can only put declarations in AVR for .NET's mainline. You generally
+put program setup stuff in a form's Load event in AVR for .NET.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nx">BegSr</span> <span class="nx">Form1_Load</span> <span class="nx">Access</span><span class="p">(</span><span class="o">*</span><span class="nx">Private</span><span class="p">)</span> <span class="nx">Event</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">.</span><span class="nx">Load</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">sender</span> <span class="o">*</span><span class="nb">Object</span>
+        <span class="nx">DclSrParm</span> <span class="nx">e</span> <span class="nx">System</span><span class="p">.</span><span class="nx">EventArgs</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <p>Occurs when form is first loaded.
+Put form "startup" code here (ie open files).</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="nx">labelCustomerName</span><span class="p">.</span><span class="nx">Text</span> <span class="o">=</span> <span class="nb">String</span><span class="p">.</span><span class="nx">Empty</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p>AVR for .NET requires you to explicitly connect to the database. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="nx">Connect</span> <span class="nx">pgmDB</span>         
+        <span class="nx">Open</span> <span class="nx">CustomerRO</span> 
+    <span class="nx">EndSr</span>
+
+    <span class="nx">BegSr</span> <span class="nx">Form1_FormClosing</span> <span class="nx">Access</span><span class="p">(</span><span class="o">*</span><span class="nx">Private</span><span class="p">)</span> <span class="nx">Event</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">.</span><span class="nx">FormClosing</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">sender</span> <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nb">Object</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">e</span> <span class="nx">Type</span><span class="p">(</span><span class="nx">System</span><span class="p">.</span><span class="nx">Windows</span><span class="p">.</span><span class="nx">Forms</span><span class="p">.</span><span class="nx">FormClosingEventArgs</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      <p>Occurs when form is closing.  <br />
+Put form "housecleaning" code here (ie close files).</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      <p>CloseReason.UserClosing = closing from control box. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="nx">If</span> <span class="nx">buttonCancel</span><span class="p">.</span><span class="nx">Enabled</span> <span class="c1">// AND e.CloseReason = CloseReason.UserClosing</span>
+            <span class="nx">e</span><span class="p">.</span><span class="nx">Cancel</span> <span class="o">=</span> <span class="o">*</span><span class="nx">True</span>
+        <span class="nx">EndIf</span>
+    <span class="nx">EndSr</span>
+
+    <span class="nx">BegSr</span> <span class="nx">Form1_FormClosed</span> <span class="nx">Access</span><span class="p">(</span><span class="o">*</span><span class="nx">Private</span><span class="p">)</span> <span class="nx">Event</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">.</span><span class="nx">FormClosed</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">sender</span> <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nb">Object</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">e</span> <span class="nx">Type</span><span class="p">(</span><span class="nx">System</span><span class="p">.</span><span class="nx">Windows</span><span class="p">.</span><span class="nx">Forms</span><span class="p">.</span><span class="nx">FormClosedEventArgs</span><span class="p">)</span>
+
+        <span class="nx">Close</span> <span class="o">*</span><span class="nx">All</span> 
+        <span class="nx">Disconnect</span> <span class="nx">pgmDB</span> 
+    <span class="nx">EndSr</span>
+
+    <span class="nx">BegSr</span> <span class="nx">buttonRead_Click</span> <span class="nx">Access</span><span class="p">(</span><span class="o">*</span><span class="nx">Private</span><span class="p">)</span> <span class="nx">Event</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">.</span><span class="nx">buttonRead</span><span class="p">.</span><span class="nx">Click</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">sender</span> <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nb">Object</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">e</span> <span class="nx">Type</span><span class="p">(</span><span class="nx">System</span><span class="p">.</span><span class="nx">EventArgs</span><span class="p">)</span>
+
+        <span class="nx">PrepInterface</span><span class="p">()</span>
+        <span class="nx">ReadFile</span><span class="p">()</span>
+        <span class="nx">PrepInterface</span><span class="p">()</span>
+    <span class="nx">EndSr</span>
+
+    <span class="nx">BegSr</span> <span class="nx">buttonCancel_Click</span> <span class="nx">Access</span><span class="p">(</span><span class="o">*</span><span class="nx">Private</span><span class="p">)</span> <span class="nx">Event</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">.</span><span class="nx">buttonCancel</span><span class="p">.</span><span class="nx">Click</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">sender</span> <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nb">Object</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">e</span> <span class="nx">Type</span><span class="p">(</span><span class="nx">System</span><span class="p">.</span><span class="nx">EventArgs</span><span class="p">)</span>
+
+        <span class="nx">Cancel</span> <span class="o">=</span> <span class="o">*</span><span class="nx">ON</span>
+    <span class="nx">EndSr</span>
+    
+    <span class="nx">BegSr</span> <span class="nx">buttonExit_Click</span> <span class="nx">Access</span><span class="p">(</span><span class="o">*</span><span class="nx">Private</span><span class="p">)</span> <span class="nx">Event</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">.</span><span class="nx">buttonExit</span><span class="p">.</span><span class="nx">Click</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">sender</span> <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nb">Object</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">e</span> <span class="nx">Type</span><span class="p">(</span><span class="nx">System</span><span class="p">.</span><span class="nx">EventArgs</span><span class="p">)</span>
+
+        <span class="nx">EndProgram</span><span class="p">()</span>
+    <span class="nx">EndSr</span>
+    
+    <span class="nx">BegSr</span> <span class="nx">exitToolStripMenuItem_Click</span> <span class="nx">Access</span><span class="p">(</span><span class="o">*</span><span class="nx">Private</span><span class="p">)</span> <span class="nx">Event</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">.</span><span class="nx">exitToolStripMenuItem</span><span class="p">.</span><span class="nx">Click</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">sender</span> <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nb">Object</span><span class="p">)</span>
+        <span class="nx">DclSrParm</span> <span class="nx">e</span> <span class="nx">Type</span><span class="p">(</span><span class="nx">System</span><span class="p">.</span><span class="nx">EventArgs</span><span class="p">)</span>
+
+        <span class="nx">EndProgram</span><span class="p">()</span>
+    <span class="nx">EndSr</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      <p>End of event handlers.        </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nx">BegSr</span> <span class="nx">ReadFile</span>
+        <span class="nx">DclFld</span> <span class="nx">TenPercent</span>    <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nx">Integer4</span><span class="p">)</span>
+        <span class="nx">DclFld</span> <span class="nx">RecordCount</span>   <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nx">Integer4</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-12'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-12'>#</a>
+      </div>
+      <p>Calculate 10% of the records in the file. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="nx">TenPercent</span> <span class="o">=</span> <span class="nx">CustomerRO</span><span class="p">.</span><span class="nx">RecCount</span> <span class="o">/</span> <span class="mi">10</span>
+        <span class="nx">RecordCount</span> <span class="o">=</span> <span class="mi">0</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-13'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-13'>#</a>
+      </div>
+      <p>Set initial progress bar properties.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="nx">progressbarCustomer</span><span class="p">.</span><span class="nx">Minimum</span>     <span class="o">=</span>  <span class="mi">0</span>
+        <span class="nx">progressbarCustomer</span><span class="p">.</span><span class="nx">Maximum</span>     <span class="o">=</span> <span class="mi">10</span>
+        <span class="nx">progressbarCustomer</span><span class="p">.</span><span class="nx">Value</span>   <span class="o">=</span>  <span class="mi">0</span>  <span class="c1">// .NET is zero-based.</span>
+        <span class="nx">progressbarCustomer</span><span class="p">.</span><span class="nx">Visible</span> <span class="o">=</span> <span class="o">*</span><span class="nx">On</span>
+
+        <span class="o">*</span><span class="nx">This</span><span class="p">.</span><span class="nx">Cursor</span> <span class="o">=</span>  <span class="nx">System</span><span class="p">.</span><span class="nx">Windows</span><span class="p">.</span><span class="nx">Forms</span><span class="p">.</span><span class="nx">Cursors</span><span class="p">.</span><span class="nx">AppStarting</span>
+
+        <span class="nx">Cancel</span> <span class="o">=</span> <span class="o">*</span><span class="nx">Off</span>
+        <span class="nx">Occur</span> <span class="nx">CustomerEDDS</span> <span class="nx">NewIndex</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> 
+        <span class="nx">SetLL</span> <span class="nx">CustomerRO</span> <span class="nx">Key</span><span class="p">(</span><span class="o">*</span><span class="nx">LoVal</span><span class="p">)</span> 
+        <span class="nx">Read</span> <span class="nx">CustomerRO</span> 
+
+        <span class="nx">DoWhile</span> <span class="p">(</span><span class="nx">NOT</span> <span class="nx">CustomerRO</span><span class="p">.</span><span class="nx">IsEof</span><span class="p">)</span> <span class="nx">AND</span> <span class="p">(</span><span class="nx">NOT</span> <span class="nx">Cancel</span><span class="p">)</span> 
+            <span class="nx">DoEvents</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-14'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-14'>#</a>
+      </div>
+      <p>Update progress bar?</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>            <span class="nx">RecordCount</span> <span class="o">=</span> <span class="nx">RecordCount</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="nx">If</span> <span class="p">(</span> <span class="nx">RecordCount</span> <span class="o">&gt;=</span> <span class="nx">TenPercent</span> <span class="p">)</span> 
+                <span class="nx">RecordCount</span>  <span class="o">=</span> <span class="mi">0</span>
+                <span class="nx">progressbarCustomer</span><span class="p">.</span><span class="nx">Value</span> <span class="o">=</span> <span class="nx">progressbarCustomer</span><span class="p">.</span><span class="nx">Value</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="nx">EndIf</span> 
+            
+            <span class="nx">Customer_CMName</span> <span class="o">=</span> <span class="nx">Customer_CMName</span> 
+            <span class="nx">labelCustomerName</span><span class="p">.</span><span class="nx">Text</span> <span class="o">=</span> <span class="nx">Customer_CMName</span>
+            <span class="nx">Read</span> <span class="nx">CustomerRO</span>
+        <span class="nx">EndDo</span>
+        <span class="nx">progressbarCustomer</span><span class="p">.</span><span class="nx">Visible</span> <span class="o">=</span> <span class="o">*</span><span class="nx">Off</span>
+        
+        <span class="o">*</span><span class="nx">This</span><span class="p">.</span><span class="nx">Cursor</span> <span class="o">=</span> <span class="nx">System</span><span class="p">.</span><span class="nx">Windows</span><span class="p">.</span><span class="nx">Forms</span><span class="p">.</span><span class="nx">Cursors</span><span class="p">.</span><span class="nx">Default</span>
+    <span class="nx">EndSr</span>
+
+    <span class="nx">BegSr</span> <span class="nx">PrepInterface</span>
+        <span class="nx">buttonRead</span><span class="p">.</span><span class="nx">Enabled</span> <span class="o">=</span> <span class="p">(</span><span class="nx">NOT</span> <span class="nx">buttonRead</span><span class="p">.</span><span class="nx">Enabled</span><span class="p">)</span> 
+        <span class="nx">buttonCancel</span><span class="p">.</span><span class="nx">Enabled</span> <span class="o">=</span> <span class="p">(</span><span class="nx">NOT</span> <span class="nx">buttonCancel</span><span class="p">.</span><span class="nx">Enabled</span><span class="p">)</span> 
+        <span class="nx">buttonExit</span><span class="p">.</span><span class="nx">Enabled</span> <span class="o">=</span> <span class="p">(</span><span class="nx">NOT</span> <span class="nx">buttonExit</span><span class="p">.</span><span class="nx">Enabled</span><span class="p">)</span> 
+    <span class="nx">EndSr</span>      
+
+    <span class="nx">BegSr</span> <span class="nx">EndProgram</span>
+        <span class="nx">Application</span><span class="p">.</span><span class="nx">Exit</span><span class="p">()</span>
+    <span class="nx">EndSr</span>
+    
+<span class="nx">EndClass</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>

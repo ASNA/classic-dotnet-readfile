@@ -1,0 +1,171 @@
+﻿BegClass formMain Partial(*Yes)
+	DclFld label1 Type(System.Windows.Forms.Label) Access(*Private) WithEvents(*Yes)
+	DclFld menuStrip1 Type(System.Windows.Forms.MenuStrip) Access(*Private) WithEvents(*Yes)
+	DclFld fileToolStripMenuItem Type(System.Windows.Forms.ToolStripMenuItem) Access(*Private) WithEvents(*Yes)
+	DclFld exitToolStripMenuItem Type(System.Windows.Forms.ToolStripMenuItem) Access(*Private) WithEvents(*Yes)
+	DclFld groupBox1 Type(System.Windows.Forms.GroupBox) Access(*Private) WithEvents(*Yes)
+	DclFld statusStrip1 Type(System.Windows.Forms.StatusStrip) Access(*Private) WithEvents(*Yes)
+	DclFld labelCustomerName Type(System.Windows.Forms.Label) Access(*Private) WithEvents(*Yes)
+	DclFld buttonExit Type(System.Windows.Forms.Button) Access(*Private) WithEvents(*Yes)
+	DclFld buttonCancel Type(System.Windows.Forms.Button) Access(*Private) WithEvents(*Yes)
+	DclFld buttonRead Type(System.Windows.Forms.Button) Access(*Private) WithEvents(*Yes)
+	DclFld progressbarCustomer Type(System.Windows.Forms.ToolStripProgressBar) Access(*Private) WithEvents(*Yes)
+
+	// Required method for Designer support - do not modify
+	// the contents of this method with the code editor.
+	BegSr InitializeComponent
+		*this.groupBox1 = *new System.Windows.Forms.GroupBox()
+		*this.label1 = *new System.Windows.Forms.Label()
+		*this.labelCustomerName = *new System.Windows.Forms.Label()
+		*this.buttonExit = *new System.Windows.Forms.Button()
+		*this.buttonCancel = *new System.Windows.Forms.Button()
+		*this.buttonRead = *new System.Windows.Forms.Button()
+		*this.statusStrip1 = *new System.Windows.Forms.StatusStrip()
+		*this.progressbarCustomer = *new System.Windows.Forms.ToolStripProgressBar()
+		*this.menuStrip1 = *new System.Windows.Forms.MenuStrip()
+		*this.fileToolStripMenuItem = *new System.Windows.Forms.ToolStripMenuItem()
+		*this.exitToolStripMenuItem = *new System.Windows.Forms.ToolStripMenuItem()
+		*this.groupBox1.SuspendLayout()
+		*this.statusStrip1.SuspendLayout()
+		*this.menuStrip1.SuspendLayout()
+		*this.SuspendLayout()
+		//
+		//groupBox1
+		//
+		*this.groupBox1.Controls.Add(*this.label1)
+		*this.groupBox1.Controls.Add(*this.labelCustomerName)
+		*this.groupBox1.Controls.Add(*this.buttonExit)
+		*this.groupBox1.Controls.Add(*this.buttonCancel)
+		*this.groupBox1.Controls.Add(*this.buttonRead)
+		*this.groupBox1.Location = *new System.Drawing.Point(23I, 37I)
+		*this.groupBox1.Name = "groupBox1"
+		*this.groupBox1.Size = *new System.Drawing.Size(581I, 254I)
+		*this.groupBox1.TabIndex = 5I
+		*this.groupBox1.TabStop = *False
+		*this.groupBox1.Text = "Read file"
+		//
+		//label1
+		//
+		*this.label1.AutoSize = *True
+		*this.label1.Location = *new System.Drawing.Point(45I, 39I)
+		*this.label1.Name = "label1"
+		*this.label1.Size = *new System.Drawing.Size(116I, 20I)
+		*this.label1.TabIndex = 9I
+		*this.label1.Text = "Customer name"
+		//
+		//labelCustomerName
+		//
+		*this.labelCustomerName.AutoSize = *True
+		*this.labelCustomerName.Font = *new System.Drawing.Font("Source Sans Pro", 14, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (0 *As System.Byte))
+		*this.labelCustomerName.Location = *new System.Drawing.Point(47I, 67I)
+		*this.labelCustomerName.Name = "labelCustomerName"
+		*this.labelCustomerName.Size = *new System.Drawing.Size(146I, 24I)
+		*this.labelCustomerName.TabIndex = 8I
+		*this.labelCustomerName.Text = "[CustomerName]"
+		//
+		//buttonExit
+		//
+		*this.buttonExit.Location = *new System.Drawing.Point(391I, 148I)
+		*this.buttonExit.Name = "buttonExit"
+		*this.buttonExit.Size = *new System.Drawing.Size(139I, 73I)
+		*this.buttonExit.TabIndex = 7I
+		*this.buttonExit.Text = "E&xit"
+		*this.buttonExit.UseVisualStyleBackColor = *True
+		//
+		//buttonCancel
+		//
+		*this.buttonCancel.Enabled = *False
+		*this.buttonCancel.Location = *new System.Drawing.Point(221I, 148I)
+		*this.buttonCancel.Name = "buttonCancel"
+		*this.buttonCancel.Size = *new System.Drawing.Size(139I, 73I)
+		*this.buttonCancel.TabIndex = 6I
+		*this.buttonCancel.Text = "&Cancel"
+		*this.buttonCancel.UseVisualStyleBackColor = *True
+		//
+		//buttonRead
+		//
+		*this.buttonRead.Location = *new System.Drawing.Point(51I, 148I)
+		*this.buttonRead.Name = "buttonRead"
+		*this.buttonRead.Size = *new System.Drawing.Size(139I, 73I)
+		*this.buttonRead.TabIndex = 5I
+		*this.buttonRead.Text = "&Read"
+		*this.buttonRead.UseVisualStyleBackColor = *True
+		//
+		//statusStrip1
+		//
+		*this.statusStrip1.Items.AddRange(*new System.Windows.Forms.ToolStripItem[] {*this.progressbarCustomer})
+		*this.statusStrip1.Location = *new System.Drawing.Point(0I, 307I)
+		*this.statusStrip1.Name = "statusStrip1"
+		*this.statusStrip1.Size = *new System.Drawing.Size(629I, 22I)
+		*this.statusStrip1.TabIndex = 6I
+		*this.statusStrip1.Text = "statusStrip1"
+		//
+		//progressbarCustomer
+		//
+		*this.progressbarCustomer.Name = "progressbarCustomer"
+		*this.progressbarCustomer.Size = *new System.Drawing.Size(100I, 16I)
+		//
+		//menuStrip1
+		//
+		*this.menuStrip1.Items.AddRange(*new System.Windows.Forms.ToolStripItem[] {*this.fileToolStripMenuItem})
+		*this.menuStrip1.Location = *new System.Drawing.Point(0I, 0I)
+		*this.menuStrip1.Name = "menuStrip1"
+		*this.menuStrip1.Size = *new System.Drawing.Size(629I, 24I)
+		*this.menuStrip1.TabIndex = 7I
+		*this.menuStrip1.Text = "menuStrip1"
+		//
+		//fileToolStripMenuItem
+		//
+		*this.fileToolStripMenuItem.DropDownItems.AddRange(*new System.Windows.Forms.ToolStripItem[] {*this.exitToolStripMenuItem})
+		*this.fileToolStripMenuItem.Name = "fileToolStripMenuItem"
+		*this.fileToolStripMenuItem.Size = *new System.Drawing.Size(37I, 20I)
+		*this.fileToolStripMenuItem.Text = "File"
+		//
+		//exitToolStripMenuItem
+		//
+		*this.exitToolStripMenuItem.Name = "exitToolStripMenuItem"
+		*this.exitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3
+		*this.exitToolStripMenuItem.Size = *new System.Drawing.Size(111I, 22I)
+		*this.exitToolStripMenuItem.Text = "E&xit"
+		//
+		//Form1
+		//
+		*this.AutoScaleDimensions = *new System.Drawing.SizeF(8, 20)
+		*this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+		*this.CausesValidation = *False
+		*this.ClientSize = *new System.Drawing.Size(629I, 329I)
+		*this.Controls.Add(*this.statusStrip1)
+		*this.Controls.Add(*this.menuStrip1)
+		*this.Controls.Add(*this.groupBox1)
+		*this.Font = *new System.Drawing.Font("Source Sans Pro", 12, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (0 *As System.Byte))
+		*this.MainMenuStrip = *this.menuStrip1
+		*this.Margin = *new System.Windows.Forms.Padding(4I, 5I, 4I, 5I)
+		*this.Name = "Form1"
+		*this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+		*this.Text = "Read file example"
+		*this.groupBox1.ResumeLayout(*False)
+		*this.groupBox1.PerformLayout()
+		*this.statusStrip1.ResumeLayout(*False)
+		*this.statusStrip1.PerformLayout()
+		*this.menuStrip1.ResumeLayout(*False)
+		*this.menuStrip1.PerformLayout()
+		*this.ResumeLayout(*False)
+		*this.PerformLayout()
+	EndSr
+	
+	//Required by the Windows Form Designer
+	DclFld components Type(System.ComponentModel.IContainer) Inz(*Nothing)
+	
+	// Clean up any resources being used.
+	// "disposing" is true if managed resources should be disposed; otherwise, false.
+	BegSr Dispose Access(*Protected) Modifier(*Overrides)
+		DclSrParm disposing Type(*Boolean)
+
+		If (disposing *And (components *NE *Nothing))
+			components.Dispose()
+		EndIf
+			
+		*Base.Dispose(disposing)
+	EndSr
+	
+EndClass
