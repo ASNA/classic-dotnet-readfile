@@ -253,13 +253,9 @@ INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131176)
 INITPROP NAME(Caption) TYPE(*BASICSTRING) VALUE('Cancel')
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('Menu3')
 END
-// ## Page at-a-time list with DSSList.
+// ## AVR Classic program to read a file.
 // ---
-// This program is an example of doing a page-at-a-time 
-// list with Mobile RPG's DDSList control. Most this 
-// program is not data dependent. By swapping out the 
-// program called in GetList, you could use copies 
-// of this program to populate many DDSLists.
+// Version 1.0
 // ---
 
 // AVR Classic doesn't a separate DB connection object. 
