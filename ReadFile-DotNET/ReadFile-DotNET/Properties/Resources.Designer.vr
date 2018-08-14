@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-DclNamespace ReadFile_NETVersion
+DclNamespace ReadFile_DotNET
     
 /// <summary>
 ///   A strongly-typed resource class, for looking up localized strings, etc.
@@ -36,7 +36,7 @@ BegClass Resources Access(*Internal) Attributes(*Global.System.CodeDom.Compiler.
         BegGet
             If ((resourceMan = *Nothing))
                 DclFld temp Type(*Global.System.Resources.ResourceManager)
-                temp = *New *Global.System.Resources.ResourceManager("ReadFile_NETVersion.Resources", *TypeOf(Resources).Assembly)
+                temp = *New *Global.System.Resources.ResourceManager("ReadFile_DotNET.Resources", *TypeOf(Resources).Assembly)
                 resourceMan = temp
             EndIf
             LeaveSr resourceMan

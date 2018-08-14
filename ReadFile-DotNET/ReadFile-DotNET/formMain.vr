@@ -1,8 +1,11 @@
-﻿// ## AVR for .NET program to read a file.
-// ---
-// Version 1.0
-// ---
+﻿ 
+ // [Return to repo](https://github.com/ASNA/classic-dotnet-readfile)
+ // ### AVR for .NET program to read a file. v1.0
+ // ---
+ // ![](screen-shot-01.png)
+ // ---
 
+// These are default WinForm .NET Framework classes that may be used by this class.
 Using System
 Using System.Collections
 Using System.ComponentModel
@@ -16,7 +19,9 @@ BegClass formMain Extends(System.Windows.Forms.Form) Access(*Public) Partial(*Ye
 	/region Default Constructor
     // AVR for .NET's code-behinds are always classes and classes have 
     // constructors. You don't usually put code here. Put set-up code in the 
-    // form's Load event. AVR Classic code-behinds don't have constructors. 
+    // form's Load event. 
+    // Note: Do not remove the constructor or the InitializeComponent() call. The
+    // .NET Framework needs this in place.
 	BegConstructor Access(*Public)
 		//
 		// Required for Windows Form Designer support
@@ -30,11 +35,14 @@ BegClass formMain Extends(System.Windows.Forms.Form) Access(*Public) Partial(*Ye
 
 	/endregion
 
+    // All variables declared in the mainline are global to the class.
     // A global variable to govern canceling program.
     DclFld Cancel Type(*Boolean)
 
+    // Declare a database object--this provides the DB connection with the given database name.
     DclDB pgmDB DBName("*Public/DG Net Local") 
 
+    // A file opened for read-only purposes. 
     DclDiskFile  CustomerRO +
           Type(*Input) +
           Org(*Indexed) +
@@ -44,24 +52,18 @@ BegClass formMain Extends(System.Windows.Forms.Form) Access(*Public) Partial(*Ye
           ImpOpen(*No) + 
 		  RnmFmt(CUSTRO)
 
-    DclDs CustomerEDDS ExtDesc(*Yes) +
-                      DBDesc("*PUBLIC/DG NET Local") +
-                      FileDesc("Examples/CMastNewL1") +                      
-                      Prefix(Customer_) Dim(2)
-
     // AVR for .NET doesn't support executable code in the mainline;
     // you can only put declarations in AVR for .NET's mainline. You generally
-    // put program setup stuff in a form's Load event in AVR for .NET.
+    // put program setup code in a form's Load event in AVR for .NET.
 	BegSr Form1_Load Access(*Private) Event(*this.Load)
 		DclSrParm sender *Object
 		DclSrParm e System.EventArgs
 
-		// Occurs when form is first loaded.
+		// This event occurs when a form is first loaded.
 		// Put form "startup" code here (ie open files).
-
         labelCustomerName.Text = String.Empty 
-        // AVR for .NET requires you to explicitly connect to the database. 
 
+        // AVR for .NET requires you to explicitly connect to the database. 
         Connect pgmDB         
         Open CustomerRO 
 	EndSr
@@ -70,11 +72,12 @@ BegClass formMain Extends(System.Windows.Forms.Form) Access(*Public) Partial(*Ye
 		DclSrParm sender Type(*Object)
 		DclSrParm e Type(System.Windows.Forms.FormClosingEventArgs)
 
-		// Occurs when form is closing.    
-		// Put form "housecleaning" code here (ie close files).
+		// This event occurs when a form is closing.    
+		// By setting e.Cancel = *True you can cancel the closing. 
 
-        // CloseReason.UserClosing = closing from control box. 
-
+        // You can also use e.CloseReason to determine how the close was 
+        // requested. See the CloseReason enum for more info. For example, 
+        // you could have a compound test as shown below (but commented out).
         If buttonCancel.Enabled // AND e.CloseReason = CloseReason.UserClosing
             e.Cancel = *True
         EndIf
@@ -84,10 +87,14 @@ BegClass formMain Extends(System.Windows.Forms.Form) Access(*Public) Partial(*Ye
 		DclSrParm sender Type(*Object)
 		DclSrParm e Type(System.Windows.Forms.FormClosedEventArgs)
 
+		// This event occurs when a form is closed.    
+		// Put form "housecleaning" code here (ie close files).
+
         Close *All 
         Disconnect pgmDB 
 	EndSr
 
+    // Occurs when Read button is clicked.
 	BegSr buttonRead_Click Access(*Private) Event(*this.buttonRead.Click)
 		DclSrParm sender Type(*Object)
 		DclSrParm e Type(System.EventArgs)
@@ -97,6 +104,7 @@ BegClass formMain Extends(System.Windows.Forms.Form) Access(*Public) Partial(*Ye
         PrepInterface()
 	EndSr
 
+    // Occurs when Cancel button is clicked.
 	BegSr buttonCancel_Click Access(*Private) Event(*this.buttonCancel.Click)
 		DclSrParm sender Type(*Object)
 		DclSrParm e Type(System.EventArgs)
@@ -104,6 +112,7 @@ BegClass formMain Extends(System.Windows.Forms.Form) Access(*Public) Partial(*Ye
         Cancel = *ON
 	EndSr
 	
+    // Occurs when Exit button is clicked.
 	BegSr buttonExit_Click Access(*Private) Event(*this.buttonExit.Click)
 		DclSrParm sender Type(*Object)
 		DclSrParm e Type(System.EventArgs)
@@ -111,7 +120,8 @@ BegClass formMain Extends(System.Windows.Forms.Form) Access(*Public) Partial(*Ye
         EndProgram()
 	EndSr
 	
-	BegSr exitToolStripMenuItem_Click Access(*Private) Event(*this.exitToolStripMenuItem.Click)
+    // Occurs when the Exit menu option is used.
+    BegSr exitToolStripMenuItem_Click Access(*Private) Event(*this.exitToolStripMenuItem.Click)
 		DclSrParm sender Type(*Object)
 		DclSrParm e Type(System.EventArgs)
 
@@ -120,6 +130,7 @@ BegClass formMain Extends(System.Windows.Forms.Form) Access(*Public) Partial(*Ye
 	
     // End of event handlers.        
 
+    // Read a file from beginning to end. Progress in 10% increments.
     BegSr ReadFile
         DclFld TenPercent    Type(*Integer4)
         DclFld RecordCount   Type(*Integer4)
@@ -129,33 +140,37 @@ BegClass formMain Extends(System.Windows.Forms.Form) Access(*Public) Partial(*Ye
         RecordCount = 0 
 
         // Set initial progress bar properties.
-        progressbarCustomer.Minimum     =  0
-        progressbarCustomer.Maximum     = 10
-        progressbarCustomer.Value   =  0  // .NET is zero-based.
+        progressbarCustomer.Minimum =  0
+        progressbarCustomer.Maximum = 10
+        progressbarCustomer.Value =  0  // .NET is zero-based.
         progressbarCustomer.Visible = *On
 
+        // Change cursor.
         *This.Cursor =  System.Windows.Forms.Cursors.AppStarting
 
         Cancel = *Off
-        Occur CustomerEDDS NewIndex(1) 
+
         SetLL CustomerRO Key(*LoVal) 
         Read CustomerRO 
 
         DoWhile (NOT CustomerRO.IsEof) AND (NOT Cancel) 
+            // DoEvents causes the loop to check the Windows event loop for 
+            // activity after every record read. 
             DoEvents
-            // Update progress bar?
             RecordCount = RecordCount + 1
+            // Update progress bar?
             If ( RecordCount >= TenPercent ) 
                 RecordCount  = 0
                 progressbarCustomer.Value = progressbarCustomer.Value + 1
             EndIf 
             
-            Customer_CMName = Customer_CMName 
             labelCustomerName.Text = Customer_CMName
             Read CustomerRO
         EndDo
+
         progressbarCustomer.Visible = *Off
         
+        // Restore cursor.
         *This.Cursor = System.Windows.Forms.Cursors.Default
     EndSr
 

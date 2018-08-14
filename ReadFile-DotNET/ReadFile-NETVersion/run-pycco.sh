@@ -1,1 +1,0 @@
-pycco Form1.vr -d ../../docs/readfile/dotnet -l javascript 

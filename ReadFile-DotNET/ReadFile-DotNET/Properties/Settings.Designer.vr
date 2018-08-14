@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-DclNamespace ReadFile_NETVersion
+DclNamespace ReadFile_DotNET
 
 BegClass Settings Access(*Internal) Partial(*Yes) Modifier(*NotExtensible) Extends(*Global.System.Configuration.ApplicationSettingsBase) +
     Attributes (*Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(), +

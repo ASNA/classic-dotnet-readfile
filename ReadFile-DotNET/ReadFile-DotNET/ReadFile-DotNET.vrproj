@@ -5,14 +5,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>12.0.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>e297bfb7-4cd6-458a-a2a8-567d28f69839</ProjectGuid>
+    <ProjectGuid>63d5a0ba-8494-4c18-a9c0-0d9d0c5e8c19</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReadFile_NETVersion</RootNamespace>
-    <AssemblyName>ReadFile_NETVersion</AssemblyName>
-    <StartupObject>ReadFile_NETVersion.formMain</StartupObject>
+    <RootNamespace>ReadFile_DotNET</RootNamespace>
+    <AssemblyName>ReadFile_DotNET</AssemblyName>
+    <StartupObject>ReadFile_DotNET.formMain</StartupObject>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <Name>ReadFile-NETVersion</Name>
+    <Name>ReadFile-DotNET</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,11 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="formMain.Designer.vr">
+      <SubType>Code</SubType>
+      <DependentUpon>formMain.vr</DependentUpon>
+    </Compile>
     <Compile Include="formMain.vr">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="formMain.Designer.vr">
-      <DependentUpon>formMain.vr</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.vr" />
     <EmbeddedResource Include="formMain.resx">

@@ -2,10 +2,10 @@
 DCLFORM // formMain
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131181)
 INITPROP NAME(Height) TYPE(*INTEGER4) VALUE(6588)
-INITPROP NAME(Left) TYPE(*INTEGER4) VALUE(13665)
+INITPROP NAME(Left) TYPE(*INTEGER4) VALUE(7710)
 INITPROP NAME(MaxButton) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('formMain')
-INITPROP NAME(Top) TYPE(*INTEGER4) VALUE(3225)
+INITPROP NAME(Top) TYPE(*INTEGER4) VALUE(2700)
 INITPROP NAME(Width) TYPE(*INTEGER4) VALUE(9432)
 DCLPROP NAME(Font) TYPE(*BLOBPROPSET) CLSID('{0BE35203-8F91-11CE-9DE3-00AA004BB851}')
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('MS Sans Serif')
@@ -18,7 +18,7 @@ INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
 INITPROP NAME(Icon) TYPE(*BLOB) VALUE('PropBagBlob0000')
 INITPROP NAME(CreationID) TYPE(*BASICSTRING) VALUE('{4634DBAF-99C7-45AF-B286-2DD5300E5CDB}')
-INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{55AC5088-FF70-4FFC-BB03-3564F227BAEE}')
+INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{91BA7E5B-0F4D-4DC5-989E-1723772CA2DF}')
 DCLCTL CLSID('{9A54164F-88B8-11CF-A6E2-00801E0111FB}') PARENT(formMain) // frameReadFile
 INITPROP NAME(Version) TYPE(*INTEGER4) VALUE(131181)
 INITPROP NAME(_PersistType) TYPE(*INTEGER2) VALUE(3)
@@ -64,6 +64,15 @@ INITPROP NAME(_ExtentX) TYPE(*INTEGER4) VALUE(5821)
 INITPROP NAME(_ExtentY) TYPE(*INTEGER4) VALUE(635)
 INITPROP NAME(_StockProps) TYPE(*INTEGER4) VALUE(111)
 INITPROP NAME(Caption) TYPE(*BASICSTRING) VALUE('Customer name')
+DCLPROP NAME(Font) TYPE(*BLOBPROPSET) CLSID('{0BE35203-8F91-11CE-9DE3-00AA004BB851}')
+INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('MS Sans Serif')
+INITPROP NAME(Size) TYPE(*CURRENCY) VALUE('12')
+INITPROP NAME(Charset) TYPE(*INTEGER2) VALUE(0)
+INITPROP NAME(Weight) TYPE(*INTEGER2) VALUE(400)
+INITPROP NAME(Underline) TYPE(*BOOLEAN) VALUE(0)
+INITPROP NAME(Italic) TYPE(*BOOLEAN) VALUE(0)
+INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
+ENDPROP
 DCLCTL CLSID('{9A541647-88B8-11CF-A6E2-00801E0111FB}') PARENT(frameReadFile) // labelCustomerName
 INITPROP NAME(Version) TYPE(*INTEGER4) VALUE(131181)
 INITPROP NAME(_PersistType) TYPE(*INTEGER2) VALUE(3)
@@ -84,7 +93,7 @@ INITPROP NAME(_StockProps) TYPE(*INTEGER4) VALUE(111)
 INITPROP NAME(Caption) TYPE(*BASICSTRING) VALUE('[Customer name]')
 DCLPROP NAME(Font) TYPE(*BLOBPROPSET) CLSID('{0BE35203-8F91-11CE-9DE3-00AA004BB851}')
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('MS Sans Serif')
-INITPROP NAME(Size) TYPE(*CURRENCY) VALUE('18')
+INITPROP NAME(Size) TYPE(*CURRENCY) VALUE('17.99')
 INITPROP NAME(Charset) TYPE(*INTEGER2) VALUE(0)
 INITPROP NAME(Weight) TYPE(*INTEGER2) VALUE(400)
 INITPROP NAME(Underline) TYPE(*BOOLEAN) VALUE(0)
@@ -253,9 +262,11 @@ INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131176)
 INITPROP NAME(Caption) TYPE(*BASICSTRING) VALUE('Cancel')
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('Menu3')
 END
-// ## AVR Classic program to read a file.
+
+// [Return to repo](https://github.com/ASNA/classic-dotnet-readfile)
+// ## AVR Classic program to read a file. v1.0
 // ---
-// Version 1.0
+// ![](screen-shot-01.png)
 // ---
 
 // AVR Classic doesn't a separate DB connection object. 
@@ -269,52 +280,59 @@ DclDiskFile  Name(CustomerRO) +
              FileDesc('Examples/CMastNewL1') +                       
              DBDesc('*Public/DG Net Local')
 
+// Variables declared in the mainline are global to this program.
 // A global variable to govern canceling program.
 DclFld Cancel Type(*Ind) 
 
+// AVR Classic supports executable code in the mainline; AVR for .NET 
+// does not. 
+
 // Center this form in the monitor window.
 // AVR Classic forms don't have a property to center a form. 
-// Also noticed that this is mainline code. AVR Classic supports
-// executable code in the mainline; AVR for .NET doesn't. AVR Classic 
-// doesn't have a form Load event--you'd generally put setup code in 
-// in a form's mainline in AVR Classic. (In AVR for .NET you'd probably
-// put it in the form's Load event handler.)
 *ThisForm.Top  =   (*Screen.Height - *ThisForm.Height) / 2
 *ThisForm.Left =   (*Screen.Width  - *ThisForm.Width ) / 2
 
 labelCustomerName.Caption = ""
 
+// Open the file (because it was declared with ImpOpen(*No).
 Open CustomerRO
 
+// Read button clicked.
 BegSr buttonRead Click
     PrepInterface()
     ReadFile()
     PrepInterface()
 EndSr
 
+// Exit button clicked.
 BEGSR buttonExit Click
     Exsr EndProgram
 ENDSR
 
+// Cancel button clicked.
 BEGSR buttonCancel Click
     Cancel = *On  
 ENDSR
 
-// A form's QueryUnload is like AVR for .NET's form's FormClosing event.
-// There is no other form closing event in AVR Classic. If the Cancel 
-// property isn't set to *On, this event is that last place to do 
-// program cleanup before the program ends. 
 BEGSR formMain QueryUnload
     DclSrParm Cancel TYPE(*IND) BY(*REFERENCE)
     DclSrParm UnloadMode TYPE(*INTEGER) LEN(2) 
 
+    // A form's QueryUnload is like AVR for .NET's form's FormClosing event.
+    // There is no other form closing events in AVR Classic. If the Cancel 
+    // property is not set to *On, this event is that last place to do 
+    // program cleanup before the program ends. 
+
+    // You can also use UnloadMode determine how the close was requested. 
+    // (like .NET's CloseReason). 
+
+    // For example, you could have a compound test as shown below (but commented out).
     DclConst CONTROL_BOX_CLOSE Value(0)
 
-    //If (UnloadMode = CONTROL_BOX_CLOSE) //AND (buttonCancel.Enabled) 
-    If buttonCancel.Enabled 
+    If buttonCancel.Enabled // AND UnloadMode = CONTROL_BOX_CLOSE
        Cancel = *On         
     Else
-       ExSr EndProgram
+       //ExSr EndProgram
     EndIf
 ENDSR
 
@@ -341,16 +359,18 @@ BegSr ReadFile
     progressbarCustomer.Value   =  1  
     progressbarCustomer.Visible = *On
 
-    // Show 
+    // Set mouse cursor.
     SetMousePtr *AppStarting
 
     Cancel = *Off
+
+    // This a very common [prime-the-pump loop](https://is.gd/MK7W6m) in AVR. 
+    // Position file pointer at beginning of file.
     SetLL CustomerRO Key(*LoVal) 
-
     Read CustomerRO EOF(CustomerEOF)  
-
-
     DoWhile (NOT CustomerEOF) AND (NOT Cancel) 
+        // DoEvents causes the loop to check the Windows event 
+        // loop for activity after every record read. 
         DoEvents
         // Update progress bar?
         RecordCount = RecordCount + 1
@@ -359,11 +379,13 @@ BegSr ReadFile
             progressbarCustomer.Value = progressbarCustomer.Value + 1
         EndIf 
 
-        //EDDS_CMName = Customer_CMName 
         labelCustomerName.Caption = Customer_CMName
         Read CustomerRO EOF(CustomerEOF)             
     EndDo
+
     progressbarCustomer.Visible = *Off
+
+    // Restore mouse cursor.
     SetMousePtr *Dft
 EndSr
 

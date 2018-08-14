@@ -17,9 +17,7 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-0'>#</a>
       </div>
-      <h2>AVR Classic program to read a file.</h2>
-<hr />
-<h2>Version 1.0</h2>
+      
     </div>
     <div class='code'>
       <div class="highlight"><pre><span></span></pre></div>
@@ -30,6 +28,21 @@
     <div class='docs'>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <p><a href="https://github.com/ASNA/classic-dotnet-readfile">Return to repo</a></p>
+<h2>AVR Classic program to read a file. v1.0</h2>
+<hr />
+<h2><img alt="" src="screen-shot-01.png" /></h2>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
       </div>
       <p>AVR Classic doesn't a separate DB connection object. 
 The DclDiskFile's DBDesc keyword provides the database name. 
@@ -46,52 +59,16 @@ AVR Classic's DB connection implicitly connects when a file is opened.</p>
     </div>
   </div>
   <div class='clearall'></div>
-  <div class='section' id='section-2'>
-    <div class='docs'>
-      <div class='octowrap'>
-        <a class='octothorpe' href='#section-2'>#</a>
-      </div>
-      <p>A global variable to govern canceling program.</p>
-    </div>
-    <div class='code'>
-      <div class="highlight"><pre><span class="nx">DclFld</span> <span class="nx">Cancel</span> <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nx">Ind</span><span class="p">)</span></pre></div>
-    </div>
-  </div>
-  <div class='clearall'></div>
   <div class='section' id='section-3'>
     <div class='docs'>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-3'>#</a>
       </div>
-      <p>Center this form in the monitor window.
-AVR Classic forms don't have a property to center a form. 
-Also noticed that this is mainline code. AVR Classic supports
-executable code in the mainline; AVR for .NET doesn't. AVR Classic 
-doesn't have a form Load event--you'd generally put setup code in 
-in a form's mainline in AVR Classic. (In AVR for .NET you'd probably
-put it in the form's Load event handler.)</p>
+      <p>Variables declared in the mainline are global to this program.
+A global variable to govern canceling program.</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="o">*</span><span class="nx">ThisForm</span><span class="p">.</span><span class="nx">Top</span>  <span class="o">=</span>   <span class="p">(</span><span class="o">*</span><span class="nx">Screen</span><span class="p">.</span><span class="nx">Height</span> <span class="o">-</span> <span class="o">*</span><span class="nx">ThisForm</span><span class="p">.</span><span class="nx">Height</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-<span class="o">*</span><span class="nx">ThisForm</span><span class="p">.</span><span class="nx">Left</span> <span class="o">=</span>   <span class="p">(</span><span class="o">*</span><span class="nx">Screen</span><span class="p">.</span><span class="nx">Width</span>  <span class="o">-</span> <span class="o">*</span><span class="nx">ThisForm</span><span class="p">.</span><span class="nx">Width</span> <span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-
-<span class="nx">labelCustomerName</span><span class="p">.</span><span class="nx">Caption</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-<span class="nx">Open</span> <span class="nx">CustomerRO</span>
-
-<span class="nx">BegSr</span> <span class="nx">buttonRead</span> <span class="nx">Click</span>
-    <span class="nx">PrepInterface</span><span class="p">()</span>
-    <span class="nx">ReadFile</span><span class="p">()</span>
-    <span class="nx">PrepInterface</span><span class="p">()</span>
-<span class="nx">EndSr</span>
-
-<span class="nx">BEGSR</span> <span class="nx">buttonExit</span> <span class="nx">Click</span>
-    <span class="nx">Exsr</span> <span class="nx">EndProgram</span>
-<span class="nx">ENDSR</span>
-
-<span class="nx">BEGSR</span> <span class="nx">buttonCancel</span> <span class="nx">Click</span>
-    <span class="nx">Cancel</span> <span class="o">=</span> <span class="o">*</span><span class="nx">On</span>  
-<span class="nx">ENDSR</span></pre></div>
+      <div class="highlight"><pre><span class="nx">DclFld</span> <span class="nx">Cancel</span> <span class="nx">Type</span><span class="p">(</span><span class="o">*</span><span class="nx">Ind</span><span class="p">)</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -100,17 +77,11 @@ put it in the form's Load event handler.)</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-4'>#</a>
       </div>
-      <p>A form's QueryUnload is like AVR for .NET's form's FormClosing event.
-There is no other form closing event in AVR Classic. If the Cancel 
-property isn't set to *On, this event is that last place to do 
-program cleanup before the program ends. </p>
+      <p>AVR Classic supports executable code in the mainline; AVR for .NET 
+does not. </p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="nx">BEGSR</span> <span class="nx">formMain</span> <span class="nx">QueryUnload</span>
-    <span class="nx">DclSrParm</span> <span class="nx">Cancel</span> <span class="nx">TYPE</span><span class="p">(</span><span class="o">*</span><span class="nx">IND</span><span class="p">)</span> <span class="nx">BY</span><span class="p">(</span><span class="o">*</span><span class="nx">REFERENCE</span><span class="p">)</span>
-    <span class="nx">DclSrParm</span> <span class="nx">UnloadMode</span> <span class="nx">TYPE</span><span class="p">(</span><span class="o">*</span><span class="nx">INTEGER</span><span class="p">)</span> <span class="nx">LEN</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> 
-
-    <span class="nx">DclConst</span> <span class="nx">CONTROL_BOX_CLOSE</span> <span class="nx">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre></div>
+      <div class="highlight"><pre></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -119,15 +90,14 @@ program cleanup before the program ends. </p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-5'>#</a>
       </div>
-      <p>If (UnloadMode = CONTROL_BOX_CLOSE) //AND (buttonCancel.Enabled) </p>
+      <p>Center this form in the monitor window.
+AVR Classic forms don't have a property to center a form. </p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    <span class="nx">If</span> <span class="nx">buttonCancel</span><span class="p">.</span><span class="nx">Enabled</span> 
-       <span class="nx">Cancel</span> <span class="o">=</span> <span class="o">*</span><span class="nx">On</span>         
-    <span class="nx">Else</span>
-       <span class="nx">ExSr</span> <span class="nx">EndProgram</span>
-    <span class="nx">EndIf</span>
-<span class="nx">ENDSR</span></pre></div>
+      <div class="highlight"><pre><span class="o">*</span><span class="nx">ThisForm</span><span class="p">.</span><span class="nx">Top</span>  <span class="o">=</span>   <span class="p">(</span><span class="o">*</span><span class="nx">Screen</span><span class="p">.</span><span class="nx">Height</span> <span class="o">-</span> <span class="o">*</span><span class="nx">ThisForm</span><span class="p">.</span><span class="nx">Height</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="o">*</span><span class="nx">ThisForm</span><span class="p">.</span><span class="nx">Left</span> <span class="o">=</span>   <span class="p">(</span><span class="o">*</span><span class="nx">Screen</span><span class="p">.</span><span class="nx">Width</span>  <span class="o">-</span> <span class="o">*</span><span class="nx">ThisForm</span><span class="p">.</span><span class="nx">Width</span> <span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+<span class="nx">labelCustomerName</span><span class="p">.</span><span class="nx">Caption</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -135,6 +105,123 @@ program cleanup before the program ends. </p>
     <div class='docs'>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>Open the file (because it was declared with ImpOpen(*No).</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="nx">Open</span> <span class="nx">CustomerRO</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <p>Read button clicked.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="nx">BegSr</span> <span class="nx">buttonRead</span> <span class="nx">Click</span>
+    <span class="nx">PrepInterface</span><span class="p">()</span>
+    <span class="nx">ReadFile</span><span class="p">()</span>
+    <span class="nx">PrepInterface</span><span class="p">()</span>
+<span class="nx">EndSr</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p>Exit button clicked.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="nx">BEGSR</span> <span class="nx">buttonExit</span> <span class="nx">Click</span>
+    <span class="nx">Exsr</span> <span class="nx">EndProgram</span>
+<span class="nx">ENDSR</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      <p>Cancel button clicked.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="nx">BEGSR</span> <span class="nx">buttonCancel</span> <span class="nx">Click</span>
+    <span class="nx">Cancel</span> <span class="o">=</span> <span class="o">*</span><span class="nx">On</span>  
+<span class="nx">ENDSR</span>
+
+<span class="nx">BEGSR</span> <span class="nx">formMain</span> <span class="nx">QueryUnload</span>
+    <span class="nx">DclSrParm</span> <span class="nx">Cancel</span> <span class="nx">TYPE</span><span class="p">(</span><span class="o">*</span><span class="nx">IND</span><span class="p">)</span> <span class="nx">BY</span><span class="p">(</span><span class="o">*</span><span class="nx">REFERENCE</span><span class="p">)</span>
+    <span class="nx">DclSrParm</span> <span class="nx">UnloadMode</span> <span class="nx">TYPE</span><span class="p">(</span><span class="o">*</span><span class="nx">INTEGER</span><span class="p">)</span> <span class="nx">LEN</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      <p>A form's QueryUnload is like AVR for .NET's form's FormClosing event.
+There is no other form closing events in AVR Classic. If the Cancel 
+property is not set to *On, this event is that last place to do 
+program cleanup before the program ends. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      <p>You can also use UnloadMode determine how the close was requested. 
+(like .NET's CloseReason). </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-12'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-12'>#</a>
+      </div>
+      <p>For example, you could have a compound test as shown below (but commented out).</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nx">DclConst</span> <span class="nx">CONTROL_BOX_CLOSE</span> <span class="nx">Value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="nx">If</span> <span class="nx">buttonCancel</span><span class="p">.</span><span class="nx">Enabled</span> <span class="c1">// AND UnloadMode = CONTROL_BOX_CLOSE</span>
+       <span class="nx">Cancel</span> <span class="o">=</span> <span class="o">*</span><span class="nx">On</span>         
+    <span class="nx">Else</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-13'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-13'>#</a>
+      </div>
+      <p>ExSr EndProgram</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nx">EndIf</span>
+<span class="nx">ENDSR</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-14'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-14'>#</a>
       </div>
       <p>The top-level menu option to end the program.</p>
     </div>
@@ -145,10 +232,10 @@ program cleanup before the program ends. </p>
     </div>
   </div>
   <div class='clearall'></div>
-  <div class='section' id='section-7'>
+  <div class='section' id='section-15'>
     <div class='docs'>
       <div class='octowrap'>
-        <a class='octothorpe' href='#section-7'>#</a>
+        <a class='octothorpe' href='#section-15'>#</a>
       </div>
       <p>Read a file from beginning to end. </p>
     </div>
@@ -158,10 +245,10 @@ program cleanup before the program ends. </p>
     </div>
   </div>
   <div class='clearall'></div>
-  <div class='section' id='section-8'>
+  <div class='section' id='section-16'>
     <div class='docs'>
       <div class='octowrap'>
-        <a class='octothorpe' href='#section-8'>#</a>
+        <a class='octothorpe' href='#section-16'>#</a>
       </div>
       <p>AVR Classic requires a Len keyword for the *Integer type. </p>
     </div>
@@ -171,10 +258,10 @@ program cleanup before the program ends. </p>
     </div>
   </div>
   <div class='clearall'></div>
-  <div class='section' id='section-9'>
+  <div class='section' id='section-17'>
     <div class='docs'>
       <div class='octowrap'>
-        <a class='octothorpe' href='#section-9'>#</a>
+        <a class='octothorpe' href='#section-17'>#</a>
       </div>
       <p>Calculate 10% of the records in the file. </p>
     </div>
@@ -184,10 +271,10 @@ program cleanup before the program ends. </p>
     </div>
   </div>
   <div class='clearall'></div>
-  <div class='section' id='section-10'>
+  <div class='section' id='section-18'>
     <div class='docs'>
       <div class='octowrap'>
-        <a class='octothorpe' href='#section-10'>#</a>
+        <a class='octothorpe' href='#section-18'>#</a>
       </div>
       <p>Set initial progress bar properties.</p>
     </div>
@@ -197,10 +284,10 @@ program cleanup before the program ends. </p>
     </div>
   </div>
   <div class='clearall'></div>
-  <div class='section' id='section-11'>
+  <div class='section' id='section-19'>
     <div class='docs'>
       <div class='octowrap'>
-        <a class='octothorpe' href='#section-11'>#</a>
+        <a class='octothorpe' href='#section-19'>#</a>
       </div>
       <p>AVR Classic is one-based in most operations. </p>
     </div>
@@ -210,31 +297,52 @@ program cleanup before the program ends. </p>
     </div>
   </div>
   <div class='clearall'></div>
-  <div class='section' id='section-12'>
+  <div class='section' id='section-20'>
     <div class='docs'>
       <div class='octowrap'>
-        <a class='octothorpe' href='#section-12'>#</a>
+        <a class='octothorpe' href='#section-20'>#</a>
       </div>
-      <p>Show </p>
+      <p>Set mouse cursor.</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="nx">SetMousePtr</span> <span class="o">*</span><span class="nx">AppStarting</span>
 
-    <span class="nx">Cancel</span> <span class="o">=</span> <span class="o">*</span><span class="nx">Off</span>
-    <span class="nx">SetLL</span> <span class="nx">CustomerRO</span> <span class="nx">Key</span><span class="p">(</span><span class="o">*</span><span class="nx">LoVal</span><span class="p">)</span> 
-
-    <span class="nx">Read</span> <span class="nx">CustomerRO</span> <span class="nx">EOF</span><span class="p">(</span><span class="nx">CustomerEOF</span><span class="p">)</span>  
-
-
-    <span class="nx">DoWhile</span> <span class="p">(</span><span class="nx">NOT</span> <span class="nx">CustomerEOF</span><span class="p">)</span> <span class="nx">AND</span> <span class="p">(</span><span class="nx">NOT</span> <span class="nx">Cancel</span><span class="p">)</span> 
-        <span class="nx">DoEvents</span></pre></div>
+    <span class="nx">Cancel</span> <span class="o">=</span> <span class="o">*</span><span class="nx">Off</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
-  <div class='section' id='section-13'>
+  <div class='section' id='section-21'>
     <div class='docs'>
       <div class='octowrap'>
-        <a class='octothorpe' href='#section-13'>#</a>
+        <a class='octothorpe' href='#section-21'>#</a>
+      </div>
+      <p>This a very common <a href="https://is.gd/MK7W6m">prime-the-pump loop</a> in AVR. 
+Position file pointer at beginning of file.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nx">SetLL</span> <span class="nx">CustomerRO</span> <span class="nx">Key</span><span class="p">(</span><span class="o">*</span><span class="nx">LoVal</span><span class="p">)</span> 
+    <span class="nx">Read</span> <span class="nx">CustomerRO</span> <span class="nx">EOF</span><span class="p">(</span><span class="nx">CustomerEOF</span><span class="p">)</span>  
+    <span class="nx">DoWhile</span> <span class="p">(</span><span class="nx">NOT</span> <span class="nx">CustomerEOF</span><span class="p">)</span> <span class="nx">AND</span> <span class="p">(</span><span class="nx">NOT</span> <span class="nx">Cancel</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-22'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-22'>#</a>
+      </div>
+      <p>DoEvents causes the loop to check the Windows event 
+loop for activity after every record read. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>        <span class="nx">DoEvents</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-23'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-23'>#</a>
       </div>
       <p>Update progress bar?</p>
     </div>
@@ -243,33 +351,35 @@ program cleanup before the program ends. </p>
         <span class="nx">If</span> <span class="p">(</span><span class="nx">RecordCount</span> <span class="o">&gt;=</span> <span class="nx">TenPercent</span><span class="p">)</span> 
             <span class="nx">RecordCount</span>  <span class="o">=</span> <span class="mi">0</span>
             <span class="nx">progressbarCustomer</span><span class="p">.</span><span class="nx">Value</span> <span class="o">=</span> <span class="nx">progressbarCustomer</span><span class="p">.</span><span class="nx">Value</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="nx">EndIf</span></pre></div>
+        <span class="nx">EndIf</span> 
+
+        <span class="nx">labelCustomerName</span><span class="p">.</span><span class="nx">Caption</span> <span class="o">=</span> <span class="nx">Customer_CMName</span>
+        <span class="nx">Read</span> <span class="nx">CustomerRO</span> <span class="nx">EOF</span><span class="p">(</span><span class="nx">CustomerEOF</span><span class="p">)</span>             
+    <span class="nx">EndDo</span>
+
+    <span class="nx">progressbarCustomer</span><span class="p">.</span><span class="nx">Visible</span> <span class="o">=</span> <span class="o">*</span><span class="nx">Off</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
-  <div class='section' id='section-14'>
+  <div class='section' id='section-24'>
     <div class='docs'>
       <div class='octowrap'>
-        <a class='octothorpe' href='#section-14'>#</a>
+        <a class='octothorpe' href='#section-24'>#</a>
       </div>
-      <p>EDDS_CMName = Customer_CMName </p>
+      <p>Restore mouse cursor.</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre>        <span class="nx">labelCustomerName</span><span class="p">.</span><span class="nx">Caption</span> <span class="o">=</span> <span class="nx">Customer_CMName</span>
-        <span class="nx">Read</span> <span class="nx">CustomerRO</span> <span class="nx">EOF</span><span class="p">(</span><span class="nx">CustomerEOF</span><span class="p">)</span>             
-    <span class="nx">EndDo</span>
-    <span class="nx">progressbarCustomer</span><span class="p">.</span><span class="nx">Visible</span> <span class="o">=</span> <span class="o">*</span><span class="nx">Off</span>
-    <span class="nx">SetMousePtr</span> <span class="o">*</span><span class="nx">Dft</span>
+      <div class="highlight"><pre>    <span class="nx">SetMousePtr</span> <span class="o">*</span><span class="nx">Dft</span>
 <span class="nx">EndSr</span>
 
 <span class="nx">BegSr</span> <span class="nx">PrepInterface</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
-  <div class='section' id='section-15'>
+  <div class='section' id='section-25'>
     <div class='docs'>
       <div class='octowrap'>
-        <a class='octothorpe' href='#section-15'>#</a>
+        <a class='octothorpe' href='#section-25'>#</a>
       </div>
       <p>Toggle buttons' Enabled property. </p>
     </div>

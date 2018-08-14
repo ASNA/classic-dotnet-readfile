@@ -5,11 +5,11 @@ Using System.Runtime.InteropServices
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-SetAssemblyAttribute AssemblyTitle("ReadFile-NETVersion")
+SetAssemblyAttribute AssemblyTitle("ReadFile-DotNET")
 SetAssemblyAttribute AssemblyDescription("")
 SetAssemblyAttribute AssemblyConfiguration("")
 SetAssemblyAttribute AssemblyCompany("")
-SetAssemblyAttribute AssemblyProduct("ReadFile-NETVersion")
+SetAssemblyAttribute AssemblyProduct("ReadFile-DotNET")
 SetAssemblyAttribute AssemblyCopyright("Copyright ©  2018")
 SetAssemblyAttribute AssemblyTrademark("")
 SetAssemblyAttribute AssemblyCulture("")
@@ -20,7 +20,7 @@ SetAssemblyAttribute AssemblyCulture("")
 SetAssemblyAttribute ComVisible(*False)
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-SetAssemblyAttribute Guid("e297bfb7-4cd6-458a-a2a8-567d28f69839")
+SetAssemblyAttribute Guid("63d5a0ba-8494-4c18-a9c0-0d9d0c5e8c19")
 
 // Version information for an assembly consists of the following four values:
 //
